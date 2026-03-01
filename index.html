@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MA + HA Launcher</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="header">
+        <div class="title">Music + Home</div>
+        <div class="subtitle">Rabbit r1 Launcher</div>
+      </header>
+
+      <section class="card">
+        <div class="row">
+          <div class="label">Music Assistant</div>
+          <div class="value" id="maUrlLabel">—</div>
+        </div>
+
+        <div class="row">
+          <div class="label">Home Assistant</div>
+          <div class="value" id="haUrlLabel">—</div>
+        </div>
+      </section>
+
+      <section class="buttons">
+        <button class="btn primary" id="openMA">Open Music Assistant</button>
+        <button class="btn" id="openHA">Open Home Assistant</button>
+      </section>
+
+      <section class="card small">
+        <div class="row">
+          <div class="label">Auto-open</div>
+          <div class="value">
+            <label class="toggle">
+              <input type="checkbox" id="autoOpenMA" />
+              <span class="toggle-ui"></span>
+            </label>
+          </div>
+        </div>
+        <div class="hint">
+          Tip: turn Auto-open ON and this card becomes a 1-tap “Music Remote”.
+        </div>
+      </section>
+
+      <section class="card small status" id="statusCard">
+        <div class="statusLine" id="statusLine">Ready.</div>
+        <div class="hint">
+          If it says “blocked”, your r1 isn’t on the same LAN/Wi-Fi as 192.168.4.55.
+        </div>
+      </section>
+
+      <footer class="footer">
+        <button class="link" id="openSettings">Settings</button>
+      </footer>
+    </main>
+
+    <dialog id="settingsDialog">
+      <form method="dialog" class="dialog">
+        <div class="dialogTitle">Settings</div>
+
+        <label class="field">
+          <div class="fieldLabel">Music Assistant URL (LAN)</div>
+          <input id="maUrlInput" type="url" inputmode="url" />
+        </label>
+
+        <label class="field">
+          <div class="fieldLabel">Home Assistant URL</div>
+          <input id="haUrlInput" type="url" inputmode="url" />
+        </label>
+
+        <div class="dialogActions">
+          <button class="btn" value="cancel">Cancel</button>
+          <button class="btn primary" id="saveSettings" value="save">Save</button>
+        </div>
+
+        <div class="hint">
+          Music Assistant API docs are on your server at:
+          <span class="mono">http://YOUR_MA_IP:8095/api-docs</span>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
