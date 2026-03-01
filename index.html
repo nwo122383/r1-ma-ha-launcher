@@ -3,57 +3,104 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>MA + HA Launcher</title>
+    <title>MA Remote</title>
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
     <main class="app">
       <header class="header">
-        <div class="title">Music + Home</div>
-        <div class="subtitle">Rabbit r1 Launcher</div>
+        <div class="title">Music Assistant</div>
+        <div class="subtitle">r1 Remote</div>
       </header>
 
       <section class="card">
         <div class="row">
-          <div class="label">Music Assistant</div>
-          <div class="value" id="maUrlLabel">—</div>
+          <div class="label">Player</div>
+          <select id="playerSelect" class="select"></select>
         </div>
 
         <div class="row">
-          <div class="label">Home Assistant</div>
-          <div class="value" id="haUrlLabel">—</div>
+          <div class="label">Status</div>
+          <div class="value" id="statusText">Not connected</div>
+        </div>
+
+        <div class="nowPlaying" id="nowPlaying">
+          <div class="npTitle" id="npTitle">—</div>
+          <div class="npSub" id="npSub">—</div>
         </div>
       </section>
 
-      <section class="buttons">
-        <button class="btn primary" id="openMA">Open Music Assistant</button>
-        <button class="btn" id="openHA">Open Home Assistant</button>
+      <section class="controls">
+        <button class="btn" id="prevBtn">⏮</button>
+        <button class="btn primary" id="playPauseBtn">⏯</button>
+        <button class="btn" id="nextBtn">⏭</button>
+      </section>
+
+      <section class="volumeCard card">
+        <div class="row">
+          <div class="label">Volume</div>
+          <div class="value"><span id="volValue">—</span>%</div>
+        </div>
+        <div class="volBar">
+          <div class="volFill" id="volFill"></div>
+        </div>
+        <div class="volBtns">
+          <button class="btn" id="volDownBtn">−</button>
+          <button class="btn" id="muteBtn">Mute</button>
+          <button class="btn" id="volUpBtn">+</button>
+        </div>
+        <div class="hint">
+          Use the r1 scroll wheel to change volume.
+        </div>
       </section>
 
       <section class="card small">
         <div class="row">
-          <div class="label">Auto-open</div>
+          <div class="label">Open MA UI</div>
+          <div class="value">
+            <button class="btn smallBtn" id="openFullMABtn">Library / Search</button>
+          </div>
+        </div>
+        <div class="hint">
+          This opens the full Music Assistant web UI. Use the r1 <b>Back</b> button to return to this remote.
+        </div>
+      </section>
+
+      <section class="card small">
+        <div class="row">
+          <div class="label">Dark mode</div>
           <div class="value">
             <label class="toggle">
-              <input type="checkbox" id="autoOpenMA" />
+              <input type="checkbox" id="darkModeToggle" />
               <span class="toggle-ui"></span>
             </label>
           </div>
         </div>
+
+        <div class="row">
+          <div class="label">Wheel step</div>
+          <div class="value">
+            <select id="wheelStep" class="select smallSelect">
+              <option value="1">1%</option>
+              <option value="2" selected>2%</option>
+              <option value="5">5%</option>
+              <option value="10">10%</option>
+            </select>
+          </div>
+        </div>
+
         <div class="hint">
-          Tip: turn Auto-open ON and this card becomes a 1-tap “Music Remote”.
+          Tip: if scrolling feels backwards, flip it in Settings.
         </div>
       </section>
 
-      <section class="card small status" id="statusCard">
-        <div class="statusLine" id="statusLine">Ready.</div>
-        <div class="hint">
-          If it says “blocked”, your r1 isn’t on the same LAN/Wi-Fi as 192.168.4.55.
-        </div>
+      <section class="card small status" id="toast">
+        <div class="statusLine" id="toastLine">Ready.</div>
       </section>
 
       <footer class="footer">
         <button class="link" id="openSettings">Settings</button>
+        <button class="link" id="reloadBtn">Reload</button>
       </footer>
     </main>
 
@@ -63,12 +110,28 @@
 
         <label class="field">
           <div class="fieldLabel">Music Assistant URL (LAN)</div>
-          <input id="maUrlInput" type="url" inputmode="url" />
+          <input id="maUrlInput" type="url" inputmode="url" placeholder="http://192.168.4.55:8095" />
         </label>
 
         <label class="field">
-          <div class="fieldLabel">Home Assistant URL</div>
-          <input id="haUrlInput" type="url" inputmode="url" />
+          <div class="fieldLabel">Music Assistant Token (Bearer)</div>
+          <input id="maTokenInput" type="password" placeholder="Paste token here" />
+          <div class="hint">
+            Saved only on this device (local storage). Not stored in GitHub.
+          </div>
+        </label>
+
+        <label class="field">
+          <div class="fieldLabel">Invert wheel direction</div>
+          <div class="row">
+            <div class="label">Off / On</div>
+            <div class="value">
+              <label class="toggle">
+                <input type="checkbox" id="invertWheelToggle" />
+                <span class="toggle-ui"></span>
+              </label>
+            </div>
+          </div>
         </label>
 
         <div class="dialogActions">
@@ -77,8 +140,7 @@
         </div>
 
         <div class="hint">
-          Music Assistant API docs are on your server at:
-          <span class="mono">http://YOUR_MA_IP:8095/api-docs</span>
+          MA API docs (local): <span class="mono">http://192.168.4.55:8095/api-docs</span>
         </div>
       </form>
     </dialog>
