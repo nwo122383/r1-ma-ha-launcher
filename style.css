@@ -8,12 +8,22 @@
   --ok: #3ddc84;
   --bad: #ff5a5f;
 
-  /* r1-ish sizing */
   --radius: 16px;
   --pad: 10px;
   --gap: 10px;
   --btn-h: 44px;
   --font: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+}
+
+:root.light {
+  --bg: #f4f7fb;
+  --card: #ffffff;
+  --card2: #f2f6ff;
+  --text: #0b1220;
+  --muted: #4b5a72;
+  --accent: #1363ff;
+  --ok: #0b8f4d;
+  --bad: #c5282f;
 }
 
 * { box-sizing: border-box; }
@@ -34,30 +44,20 @@ html, body {
   gap: var(--gap);
 }
 
-.header {
-  padding: 4px 2px 2px 2px;
-}
-.title {
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 1.1;
-}
-.subtitle {
-  font-size: 11px;
-  color: var(--muted);
-  margin-top: 2px;
-}
+.header { padding: 4px 2px 2px 2px; }
+.title { font-size: 16px; font-weight: 800; line-height: 1.1; }
+.subtitle { font-size: 11px; color: var(--muted); margin-top: 2px; }
 
 .card {
   background: linear-gradient(180deg, var(--card), var(--card2));
-  border: 1px solid rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.10);
   border-radius: var(--radius);
   padding: 10px;
 }
 
-.card.small {
-  padding: 10px;
-}
+:root.light .card { border-color: rgba(0,0,0,0.08); }
+
+.card.small { padding: 10px; }
 
 .row {
   display: flex;
@@ -67,39 +67,73 @@ html, body {
   margin: 6px 0;
 }
 
-.label {
-  font-size: 11px;
-  color: var(--muted);
+.label { font-size: 11px; color: var(--muted); }
+.value { font-size: 11px; text-align: right; }
+
+.select {
+  width: 190px;
+  height: 34px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(0,0,0,0.18);
+  color: var(--text);
+  padding: 0 8px;
+  outline: none;
 }
 
-.value {
-  font-size: 11px;
-  text-align: right;
-  max-width: 160px;
+:root.light .select {
+  background: rgba(255,255,255,0.9);
+  border-color: rgba(0,0,0,0.10);
+}
+
+.smallSelect { width: 90px; height: 32px; }
+
+.nowPlaying {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+:root.light .nowPlaying { border-top-color: rgba(0,0,0,0.08); }
+
+.npTitle {
+  font-size: 13px;
+  font-weight: 700;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.buttons {
+.npSub {
+  margin-top: 2px;
+  font-size: 11px;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.controls {
   display: flex;
-  flex-direction: column;
   gap: 8px;
+  justify-content: space-between;
 }
 
 .btn {
+  flex: 1;
   height: var(--btn-h);
   border-radius: 14px;
-  border: 1px solid rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.12);
   background: rgba(255,255,255,0.06);
   color: var(--text);
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 700;
   cursor: pointer;
 }
 
-.btn:active {
-  transform: translateY(1px);
+:root.light .btn {
+  background: rgba(0,0,0,0.04);
+  border-color: rgba(0,0,0,0.10);
 }
 
 .btn.primary {
@@ -107,10 +141,68 @@ html, body {
   border-color: rgba(74,163,255,0.45);
 }
 
+:root.light .btn.primary {
+  background: rgba(19,99,255,0.16);
+  border-color: rgba(19,99,255,0.35);
+}
+
+.btn:active { transform: translateY(1px); }
+
+.smallBtn {
+  height: 34px;
+  font-size: 12px;
+  padding: 0 10px;
+  flex: unset;
+}
+
+.volumeCard .volBar {
+  margin-top: 8px;
+  height: 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.10);
+  overflow: hidden;
+}
+
+:root.light .volumeCard .volBar {
+  background: rgba(0,0,0,0.06);
+  border-color: rgba(0,0,0,0.08);
+}
+
+.volFill {
+  height: 100%;
+  width: 0%;
+  background: rgba(74,163,255,0.75);
+}
+
+:root.light .volFill {
+  background: rgba(19,99,255,0.75);
+}
+
+.volBtns {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+}
+
+.volBtns .btn { font-size: 14px; }
+
+.hint {
+  margin-top: 8px;
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.25;
+}
+
+.statusLine { font-size: 12px; font-weight: 700; }
+.status.ok .statusLine { color: var(--ok); }
+.status.bad .statusLine { color: var(--bad); }
+
 .footer {
   margin-top: auto;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  gap: 10px;
 }
 
 .link {
@@ -122,31 +214,8 @@ html, body {
   cursor: pointer;
 }
 
-.hint {
-  margin-top: 8px;
-  font-size: 11px;
-  color: var(--muted);
-  line-height: 1.25;
-}
-
-.statusLine {
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.status.ok .statusLine { color: var(--ok); }
-.status.bad .statusLine { color: var(--bad); }
-
-.toggle {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-}
-.toggle input {
-  width: 0;
-  height: 0;
-  opacity: 0;
-}
+.toggle { position: relative; display: inline-flex; align-items: center; }
+.toggle input { width: 0; height: 0; opacity: 0; }
 .toggle-ui {
   width: 44px;
   height: 24px;
@@ -155,6 +224,10 @@ html, body {
   border: 1px solid rgba(255,255,255,0.12);
   position: relative;
   display: inline-block;
+}
+:root.light .toggle-ui {
+  background: rgba(0,0,0,0.06);
+  border-color: rgba(0,0,0,0.10);
 }
 .toggle-ui::after {
   content: "";
@@ -167,18 +240,15 @@ html, body {
   left: 2px;
   transition: transform 0.15s ease;
 }
+:root.light .toggle-ui::after { background: rgba(0,0,0,0.70); }
+
 .toggle input:checked + .toggle-ui {
   background: rgba(61,220,132,0.18);
   border-color: rgba(61,220,132,0.45);
 }
-.toggle input:checked + .toggle-ui::after {
-  transform: translateX(20px);
-}
+.toggle input:checked + .toggle-ui::after { transform: translateX(20px); }
 
-dialog::backdrop {
-  background: rgba(0,0,0,0.55);
-}
-
+dialog::backdrop { background: rgba(0,0,0,0.55); }
 .dialog {
   border: 1px solid rgba(255,255,255,0.10);
   background: var(--card);
@@ -187,31 +257,26 @@ dialog::backdrop {
   padding: 12px;
   width: min(360px, 92vw);
 }
+:root.light .dialog { border-color: rgba(0,0,0,0.10); }
 
-.dialogTitle {
-  font-size: 14px;
-  font-weight: 700;
-  margin-bottom: 10px;
-}
+.dialogTitle { font-size: 14px; font-weight: 800; margin-bottom: 10px; }
 
-.field {
-  display: block;
-  margin: 10px 0;
-}
-.fieldLabel {
-  font-size: 11px;
-  color: var(--muted);
-  margin-bottom: 6px;
-}
-input[type="url"] {
+.field { display: block; margin: 10px 0; }
+.fieldLabel { font-size: 11px; color: var(--muted); margin-bottom: 6px; }
+
+input[type="url"], input[type="password"] {
   width: 100%;
   height: 38px;
   border-radius: 12px;
   border: 1px solid rgba(255,255,255,0.12);
-  background: rgba(0,0,0,0.20);
+  background: rgba(0,0,0,0.18);
   color: var(--text);
   padding: 0 10px;
   outline: none;
+}
+:root.light input[type="url"], :root.light input[type="password"] {
+  background: rgba(255,255,255,0.9);
+  border-color: rgba(0,0,0,0.10);
 }
 
 .dialogActions {
